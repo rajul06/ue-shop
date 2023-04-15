@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "33189596487",
+    "project_id": "ue-shop-a230c",
+    "storage_bucket": "ue-shop-a230c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:33189596487:android:e8cf54d879eeb7a0ad1062",
+        "android_client_info": {
+          "package_name": "com.example.learn_git_github"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "33189596487-9en0p61akdso6leufqik85gjdj2ckbik.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3eeAv0MpIHJFl7LTcgGdIxHM0cBJPMc4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "33189596487-9en0p61akdso6leufqik85gjdj2ckbik.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
