@@ -5,8 +5,28 @@ class DashboardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF0095DA),
-        title: Text('Dashboard'),
+        // automaticallyImplyLeading: false,
+        title: Text('Nama Aplikasi'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              // aksi yang ingin dilakukan ketika tombol search ditekan
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              // aksi yang ingin dilakukan ketika tombol pengaturan ditekan
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.notifications),
+            onPressed: () {
+              // aksi yang ingin dilakukan ketika tombol notifikasi ditekan
+            },
+          ),
+        ],
       ),
       backgroundColor: Colors.white,
       body: Center(
