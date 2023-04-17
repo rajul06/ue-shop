@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:learn_git_github/pages/dashboard.dart';
+import 'dashboard.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
           context, MaterialPageRoute(builder: (context) => DashboardPage()));
     } on FirebaseAuthException catch (error) {
       setState(() {
-        _errorMessage = error.message!;
+        _errorMessage = 'Email atau password yang anda masukkan salah';
       });
     }
   }
@@ -48,7 +48,6 @@ class _LoginPageState extends State<LoginPage> {
   // Nyimpan email dan password dari field email dan password
   String email = '';
   String password = '';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
