@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'dashboard.dart';
+
+import 'halaman_beranda.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -37,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
         _errorMessage = '';
       });
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => DashboardPage()));
+          context, MaterialPageRoute(builder: (context) => HomePageBarangPenampung()));
     } on FirebaseAuthException catch (error) {
       setState(() {
         _errorMessage = 'Email atau password yang anda masukkan salah';
