@@ -1,26 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ue_shop/pages/halaman_jual_barang_penampung2.dart';
-
 import '../components/build_card_jual_barang.dart';
-
-// untuk mengupload file ke firebase storage
-
-// final FirebaseAuth _auth = FirebaseAuth.instance;
-// final FirebaseStorage _storage = FirebaseStorage.instance;
-
-// // get user profile image
-// Future uploadUserProfileImage(File imageFile) async {
-//   User? user = _auth.currentUser;
-//   String imagePath = 'users/${user?.uid}/profile.jpg';
-//   try {
-//     TaskSnapshot snapshot = await _storage.ref(imagePath).putFile(imageFile);
-//     String downloadUrl = await snapshot.ref.getDownloadURL();
-//     return downloadUrl;
-//   } on FirebaseException catch (e) {
-//     print(e);
-//   }
-// }
 
 class JualBarangPenampung extends StatefulWidget {
   const JualBarangPenampung({super.key});
@@ -30,15 +11,6 @@ class JualBarangPenampung extends StatefulWidget {
 }
 
 class _JualBarangPenampung extends State<JualBarangPenampung> {
-  // untuk membuka file explore hp dan mengupload gambar
-  // File? _selectedFile;
-  // void _openFileExplorer() async {
-  //   final result = await FilePicker.platform.pickFiles();
-  //   if (result != null) {
-  //     setState(() => _selectedFile = File(result.files.single.path!));
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
