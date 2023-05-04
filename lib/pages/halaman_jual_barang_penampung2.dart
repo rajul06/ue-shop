@@ -76,10 +76,24 @@ class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
         .catchError((error) => print("Failed to add user: $error"));
   }
 
+  // validasi form sudah lengkap
+  final _formKey = GlobalKey<FormState>();
+  AutovalidateMode _autoValidateMode = AutovalidateMode.disabled;
+
   void _submitForm() {
     // Fungsi untuk mengirimkan data form ke server atau melakukan tindakan lainnya
-    uploadGambarBarang(_selectedFile!);
-    tambahBarang();
+
+    if (_formKey.currentState!.validate()) {
+      // Simpan data ke database
+      uploadGambarBarang(_selectedFile!);
+      tambahBarang();
+      popUpUploadBarangPenampung(context);
+    } else {
+      // Tampilkan pesan kesalahan pada setiap form yang belum diisi dengan benar
+      setState(() {
+        _autoValidateMode = AutovalidateMode.always;
+      });
+    }
   }
 
   @override
@@ -112,7 +126,6 @@ class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
               ),
               onPressed: () {
                 _submitForm();
-                popUpUploadBarangPenampung(context);
               },
             ),
           )
@@ -121,6 +134,8 @@ class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Form(
+          key: _formKey,
+          autovalidateMode: _autoValidateMode,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
