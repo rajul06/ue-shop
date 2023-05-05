@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../components/pop_up_berhasil_tambah_barang_penampung.dart';
+import '../proses/proses_tambah_barang.dart';
 
 class JualBarangPenampung2 extends StatefulWidget {
   @override
@@ -14,6 +15,11 @@ class JualBarangPenampung2 extends StatefulWidget {
 }
 
 class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
+  // Mendapatkan data user
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+
   // untuk membuka file explore hp dan mengupload gambar
   File? _selectedFile;
   String? _filePathStr;
@@ -26,6 +32,7 @@ class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
   }
 
   // Variabel untuk menyimpan nilai input dari form
+  String? _userId;
   String _namaBarang = '';
   int _hargaBarang = 0;
   String _kategori = '';
@@ -34,59 +41,34 @@ class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
   String _jasaPengiriman = '';
   String _metodePembayaran = '';
 
+  bool _pesanHarga = false;
+  bool _pesanBerat = false;
+
   // Pesan berhasil upload berhasil atau tidak
   String pesanUpload = '';
 
-  // nilai error untuk masing-masing input
-  String _hargaBarangMessage = 'Harga Barang';
-  // Mendapatkan data user
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseStorage _storage = FirebaseStorage.instance;
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
-
-  Future uploadGambarBarang(File imageFile) async {
-    // Fungsi untuk mengupload gambar form ke server atau melakukan tindakan lainnya
-    User? user = _auth.currentUser;
-    String imagePath =
-        'barang_penampung/${user?.uid}/$_kategori/$_namaBarang.jpg';
-    try {
-      TaskSnapshot snapshot = await _storage.ref(imagePath).putFile(imageFile);
-      String downloadUrl = await snapshot.ref.getDownloadURL();
-      return downloadUrl;
-    } on FirebaseException catch (e) {
-      print(e);
-    }
-  }
-
-  Future<void> tambahBarang() {
-    // Fungsi tambah barang ke database firestore firebase
-    return _db
-        .collection('barang')
-        .doc()
-        .set({
-          'nama_barang': _namaBarang,
-          'harga_barang': _hargaBarang,
-          'kategori': _kategori,
-          'deskripsi': _deskripsi,
-          'berat_barang': _beratBarang,
-          'jasa_pengiriman': _jasaPengiriman,
-          'metode_pembayaran': _metodePembayaran
-        })
-        .then((value) => print("User Added"))
-        .catchError((error) => print("Failed to add user: $error"));
-  }
-
-  // validasi form sudah lengkap
   final _formKey = GlobalKey<FormState>();
   AutovalidateMode _autoValidateMode = AutovalidateMode.disabled;
 
   void _submitForm() {
     // Fungsi untuk mengirimkan data form ke server atau melakukan tindakan lainnya
-
-    if (_formKey.currentState!.validate()) {
+    User? user = _auth.currentUser;
+    _userId = user?.uid;
+    if (_formKey.currentState!.validate() && _selectedFile != null) {
       // Simpan data ke database
-      uploadGambarBarang(_selectedFile!);
-      tambahBarang();
+      uploadGambarBarang(
+          _auth, _storage, _selectedFile!, _kategori, _namaBarang);
+      tambahBarang(
+          _db,
+          _userId,
+          _namaBarang,
+          _hargaBarang,
+          _kategori,
+          _deskripsi,
+          _beratBarang,
+          _jasaPengiriman,
+          _metodePembayaran,
+          'penampung');
       popUpUploadBarangPenampung(context);
     } else {
       // Tampilkan pesan kesalahan pada setiap form yang belum diisi dengan benar
@@ -95,6 +77,41 @@ class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
       });
     }
   }
+  // Future uploadGambarBarang(File imageFile) async {
+  //   // Fungsi untuk mengupload gambar form ke server atau melakukan tindakan lainnya
+  //   User? user = _auth.currentUser;
+  //   _userId = user?.uid;
+  //   String imagePath =
+  //       'barang_penampung/${user?.uid}/$_kategori/$_namaBarang.jpg';
+  //   try {
+  //     TaskSnapshot snapshot = await _storage.ref(imagePath).putFile(imageFile);
+  //     String downloadUrl = await snapshot.ref.getDownloadURL();
+  //     return downloadUrl;
+  //   } on FirebaseException catch (e) {
+  //     print(e);
+  //   }
+  // }
+
+  // Future<void> tambahBarang() {
+  //   // Fungsi tambah barang ke database firestore firebase
+  //   return _db
+  //       .collection('barang')
+  //       .doc()
+  //       .set({
+  //         'id_user': _userId,
+  //         'nama_barang': _namaBarang,
+  //         'harga_barang': _hargaBarang,
+  //         'kategori': _kategori,
+  //         'deskripsi': _deskripsi,
+  //         'berat_barang': _beratBarang,
+  //         'jasa_pengiriman': _jasaPengiriman,
+  //         'metode_pembayaran': _metodePembayaran
+  //       })
+  //       .then((value) => print("User Added"))
+  //       .catchError((error) => print("Failed to add user: $error"));
+  // }
+
+  // validasi form sudah lengkap
 
   @override
   Widget build(BuildContext context) {
@@ -198,6 +215,8 @@ class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Harga barang tidak boleh kosong';
+                  } else if (_pesanHarga) {
+                    return 'Harga barang harus berupa angka';
                   }
                   return null;
                 },
@@ -207,7 +226,7 @@ class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
                       _hargaBarang = int.parse(value);
                     });
                   } catch (e) {
-                    print('Masukkan harga barang salah');
+                    _pesanHarga = true;
                   }
                 },
               ),
@@ -226,7 +245,7 @@ class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
               Row(
                 children: <Widget>[
                   Radio(
-                    value: 'TV/Monitor',
+                    value: 'TV_Monitor',
                     groupValue: _kategori,
                     onChanged: (value) {
                       setState(() {
@@ -236,7 +255,7 @@ class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
                   ),
                   const Text('TV/Monitor'),
                   Radio(
-                    value: 'HP % Sejenisnya',
+                    value: 'HP_Sejenisnya',
                     groupValue: _kategori,
                     onChanged: (value) {
                       setState(() {
@@ -280,6 +299,8 @@ class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Berat barang tidak boleh kosong';
+                  } else if (_pesanBerat) {
+                    return 'Berat barang harus berupa angka';
                   }
                   return null;
                 },
@@ -289,7 +310,7 @@ class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
                       _beratBarang = int.parse(value);
                     });
                   } catch (e) {
-                    print('Masukkan berat barang salah');
+                    _pesanBerat = true;
                   }
                 },
               ),
