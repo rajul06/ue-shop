@@ -59,6 +59,8 @@ class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
       uploadGambarBarang(
           _auth, _storage, _selectedFile!, _kategori, _namaBarang);
       tambahBarang(
+          _auth,
+          _storage,
           _db,
           _userId,
           _namaBarang,
@@ -68,7 +70,8 @@ class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
           _beratBarang,
           _jasaPengiriman,
           _metodePembayaran,
-          'penampung');
+          'penampung',
+          _selectedFile);
       popUpUploadBarangPenampung(context);
     } else {
       // Tampilkan pesan kesalahan pada setiap form yang belum diisi dengan benar

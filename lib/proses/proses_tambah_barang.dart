@@ -2,25 +2,36 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-Future<void> tambahBarang(db, userId, namaBarang, hargaBarang, kategori,
-    deskripsi, beratBarang, jasaPengiriman, metodePembayaran, jenis_akun) {
+Future<void> tambahBarang(
+    auth,
+    storage,
+    db,
+    userId,
+    namaBarang,
+    hargaBarang,
+    kategori,
+    deskripsi,
+    beratBarang,
+    jasaPengiriman,
+    metodePembayaran,
+    jenis_akun,
+    imageFile) async {
+  var imagePath =
+      await uploadGambarBarang(auth, storage, imageFile, kategori, namaBarang);
   // Fungsi tambah barang ke database firestore firebase
-  return db
-      .collection('barang')
-      .doc()
-      .set({
-        'id_user': userId,
-        'nama_barang': namaBarang,
-        'harga_barang': hargaBarang,
-        'kategori': kategori,
-        'deskripsi': deskripsi,
-        'berat_barang': beratBarang,
-        'jasa_pengiriman': jasaPengiriman,
-        'metode_pembayaran': metodePembayaran,
-        'jenis_akun': jenis_akun
-      })
-      .then((value) => print("User Added"))
-      .catchError((error) => print("Failed to add user: $error"));
+  return db.collection('barang').doc().set({
+    'id_user': userId,
+    'nama_barang': namaBarang,
+    'harga_barang': hargaBarang,
+    'kategori': kategori,
+    'deskripsi': deskripsi,
+    'berat_barang': beratBarang,
+    'jasa_pengiriman': jasaPengiriman,
+    'metode_pembayaran': metodePembayaran,
+    'jenis_akun': jenis_akun,
+    'lokasi': 'Banda Aceh',
+    'url_download': imagePath,
+  }).catchError((error) => print("Failed to add user: $error"));
 }
 
 Future uploadGambarBarang(
