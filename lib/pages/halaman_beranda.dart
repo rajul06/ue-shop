@@ -2,7 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ue_shop/components/build_barang_beranda.dart';
 
+import '../proses/proses_getData.dart';
+
 class HomePageBarangPenampung extends StatelessWidget {
+  Future<List<dynamic>> fetchData() async {
+    // Simulasi penundaan jaringan
+    await Future.delayed(Duration(seconds: 2));
+
+    // Mengambil data dari firebase menggunakan fungsi dibawah, datanya yang dikembalikan sudah dirapikan
+    return await getDataBarangPenampung();
+  }
+
   static const kategoriTitleStyle = TextStyle(
       fontFamily: 'InriaSans',
       fontWeight: FontWeight.bold,
@@ -142,51 +152,34 @@ class HomePageBarangPenampung extends StatelessWidget {
                       height: 10.0,
                       width: double.infinity,
                     ),
-                    Wrap(
-                        spacing: 15,
-                        alignment: WrapAlignment.spaceBetween,
-                        children: <Widget>[
-                          buildCardBarang(
-                              'Printer Epson',
-                              'Rp.500.000',
-                              'Banda Aceh',
-                              const AssetImage('assets/images/printer.png'),
-                              () {
-                            print('barang 1 ditekan');
-                          }),
-                          buildCardBarang(
-                              'Lampu Meja',
-                              'Rp.100.000',
-                              'Aceh Besar',
-                              const AssetImage('assets/images/printer.png'),
-                              () {
-                            print('barang 2 ditekan');
-                          }),
-                          buildCardBarang(
-                              'Lampu Meja',
-                              'Rp.100.000',
-                              'Aceh Besar',
-                              const AssetImage('assets/images/printer.png'),
-                              () {
-                            print('barang 2 ditekan');
-                          }),
-                          buildCardBarang(
-                              'Lampu Meja',
-                              'Rp.100.000',
-                              'Aceh Besar',
-                              const AssetImage('assets/images/printer.png'),
-                              () {
-                            print('barang 2 ditekan');
-                          }),
-                          buildCardBarang(
-                              'Lampu Meja',
-                              'Rp.100.000',
-                              'Aceh Besar',
-                              const AssetImage('assets/images/printer.png'),
-                              () {
-                            print('barang 2 ditekan');
-                          }),
-                        ])
+                    FutureBuilder<List<dynamic>>(
+                      future: fetchData(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          // Ketika data masih dimuat, tampilkan indikator loading
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          // Ketika terjadi error dalam pengambilan data
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          // Ketika data telah berhasil diambil
+                          List items = snapshot.data!;
+                          return Wrap(
+                            spacing: 15.0,
+                            alignment: WrapAlignment.spaceBetween,
+                            children: List.generate(
+                                items.length,
+                                (index) => buildCardBarang(
+                                    items[index]['namaBarang'],
+                                    items[index]['hargaBarang'].toString(),
+                                    items[index]['lokasi'],
+                                    items[index]['urlDownload'],
+                                    () {})),
+                          );
+                        }
+                      },
+                    ),
                   ]),
             ))
       ]),
