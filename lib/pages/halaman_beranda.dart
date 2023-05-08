@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ue_shop/components/build_barang_beranda.dart';
 
 import '../proses/proses_getData.dart';
+import 'detailbarang.dart';
 
 class HomePageBarangPenampung extends StatelessWidget {
   Future<List<dynamic>> fetchData() async {
@@ -175,7 +176,19 @@ class HomePageBarangPenampung extends StatelessWidget {
                                     items[index]['hargaBarang'].toString(),
                                     items[index]['lokasi'],
                                     items[index]['urlDownload'],
-                                    () {})),
+                                    () {
+                                      Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ProductDetailPage(
+                                            productName: 'Printer',
+                                            productImage: AssetImage('assets/images/test_images.png'),
+                                            productPrice: '250000',
+                                            productDeskription: "barang mahal ini boss.",
+                                        ),
+                                      ),
+                                    );
+                                    })),
                           );
                         }
                       },
