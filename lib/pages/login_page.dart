@@ -131,24 +131,22 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            SizedBox(
-              width: 114,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  elevation: 5.0,
-                  backgroundColor: Colors.white,
-                ),
-                child: Text(
-                  'Daftar',
-                  style: TextStyle(
-                    color: Color(0xFF0095DA),
-                  ),
-                ),
-              ),
+            SizedBox(height: 16.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Belum punya akun?',
+                    style: TextStyle(fontFamily: 'InriaSans', fontSize: 16.0)),
+                GestureDetector(
+                  onTap: () {},
+                  child: Text(' Daftar',
+                      style: TextStyle(
+                          fontFamily: 'InriaSans',
+                          fontSize: 16.0,
+                          decoration: TextDecoration.underline,
+                          color: Color(0xFF0095DA))),
+                )
+              ],
             )
           ],
         ),
