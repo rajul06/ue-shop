@@ -58,7 +58,7 @@ class ProductDetailPage extends StatelessWidget {
                   ),
                   SizedBox(height: 50),
                   Text(
-                    'Deskripsi Produk',
+                    'Deskripsi',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 5),
