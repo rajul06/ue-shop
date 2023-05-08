@@ -181,9 +181,9 @@ class HomePageBarangPenampung extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => ProductDetailPage(
-                                            productName: 'Printer',
+                                            productName: items[index]['namaBarang'],
                                             productImage: AssetImage('assets/images/test_images.png'),
-                                            productPrice: '250000',
+                                            productPrice: items[index]['hargaBarang'].toString(),
                                             productDeskription: "barang mahal ini boss.",
                                         ),
                                       ),
