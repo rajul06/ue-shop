@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ue_shop/components/build_barang_beranda.dart';
 
-import '../proses/proses_getData.dart';
-import 'detailbarang.dart';
+import '../../proses/proses_getData.dart';
+import 'detail_barang.dart';
 
 class HomePageBarangPenampung extends StatelessWidget {
   Future<List<dynamic>> fetchData() async {
@@ -172,22 +172,27 @@ class HomePageBarangPenampung extends StatelessWidget {
                             children: List.generate(
                                 items.length,
                                 (index) => buildCardBarang(
-                                    items[index]['namaBarang'],
-                                    items[index]['hargaBarang'].toString(),
-                                    items[index]['lokasi'],
-                                    items[index]['urlDownload'],
-                                    () {
+                                        items[index]['namaBarang'],
+                                        items[index]['hargaBarang'].toString(),
+                                        items[index]['lokasi'],
+                                        items[index]['urlDownload'], () {
                                       Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ProductDetailPage(
-                                            productName: items[index]['namaBarang'],
-                                            productImage: AssetImage('assets/images/test_images.png'),
-                                            productPrice: items[index]['hargaBarang'].toString(),
-                                            productDeskription: "barang mahal ini boss.",
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ProductDetailPage(
+                                            productName: items[index]
+                                                ['namaBarang'],
+                                            productImage: AssetImage(
+                                                'assets/images/test_images.png'),
+                                            productPrice: items[index]
+                                                    ['hargaBarang']
+                                                .toString(),
+                                            productDeskription:
+                                                "barang mahal ini boss.",
+                                          ),
                                         ),
-                                      ),
-                                    );
+                                      );
                                     })),
                           );
                         }

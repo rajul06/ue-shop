@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ue_shop/pages/halaman_jual_barang_penampung.dart';
+import 'package:ue_shop/pages/penampung/halaman_jual_barang_penampung.dart';
 
-import '../pages/home_page_navbar.dart';
+import '../pages/penampung/home_page_navbar.dart';
 
 Future popUpUploadBarangPenampung(context) {
   return showDialog(

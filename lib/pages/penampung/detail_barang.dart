@@ -6,22 +6,25 @@ class ProductDetailPage extends StatelessWidget {
   final String productPrice;
   final String productDeskription;
 
-  const ProductDetailPage({
-    Key? key,
-    required this.productName,
-    required this.productImage,
-    required this.productPrice,
-    required this.productDeskription
-  }) : super(key: key);
+  const ProductDetailPage(
+      {Key? key,
+      required this.productName,
+      required this.productImage,
+      required this.productPrice,
+      required this.productDeskription})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Nama Barang', style: TextStyle (color :Colors.black)),
+        title: Text('Nama Barang', style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black,),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -62,10 +65,10 @@ class ProductDetailPage extends StatelessWidget {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 5),
-                    Text(
-                      productDeskription,
-                      style: TextStyle(fontSize: 16),
-                      textAlign: TextAlign.justify,
+                  Text(
+                    productDeskription,
+                    style: TextStyle(fontSize: 16),
+                    textAlign: TextAlign.justify,
                   ),
                 ],
               ),
@@ -73,7 +76,6 @@ class ProductDetailPage extends StatelessWidget {
           ],
         ),
       ),
-      
       bottomNavigationBar: BottomAppBar(
         child: Container(
           height: 50,
@@ -104,7 +106,6 @@ class ProductDetailPage extends StatelessWidget {
           ),
         ),
       ),
-
     );
   }
 }
