@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ue_shop/pages/halaman_jual_barang_penampung2.dart';
-import '../components/build_card_jual_barang.dart';
+import 'package:ue_shop/pages/penampung/halaman_jual_barang_penampung2.dart';
+import '../../components/build_card_jual_barang.dart';
 
 class JualBarangPenampung extends StatefulWidget {
   const JualBarangPenampung({super.key});

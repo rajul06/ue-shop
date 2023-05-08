@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ue_shop/pages/halaman_barang_bekas_masyarakat.dart';
-import 'package:ue_shop/pages/halaman_beranda.dart';
-import 'package:ue_shop/pages/halaman_jual_barang_penampung.dart';
+import 'package:ue_shop/pages/penampung/halaman_barang_bekas_masyarakat.dart';
+import 'package:ue_shop/pages/penampung/halaman_beranda.dart';
+import 'package:ue_shop/pages/penampung/halaman_jual_barang_penampung.dart';
 import 'halaman_profil.dart';
-import '../components/custom_app_bar.dart';
+import '../../components/custom_app_bar.dart';
 
 class HalamanBeranda extends StatefulWidget {
   @override
