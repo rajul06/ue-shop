@@ -1,9 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:ue_shop/pages/halaman_daftar_akun.dart';
-import '../halaman_pilih_user_role.dart';
-import 'home_page_navbar_masyarakat.dart';
+import 'package:ue_shop/pages/masyarakat/halaman_profil_masyarakat.dart';
 
 class HalamanLoginMasyarakat extends StatefulWidget {
   @override
@@ -39,7 +37,7 @@ class _HalamanLoginMasyarakatState extends State<HalamanLoginMasyarakat> {
         _errorMessage = '';
       });
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => HalamanBerandaMasyarakat()));
+          MaterialPageRoute(builder: (context) => ProfilePage()));
     } on FirebaseAuthException catch (error) {
       setState(() {
         _errorMessage = 'Email atau password yang anda masukkan salah';
@@ -81,12 +79,6 @@ class _HalamanLoginMasyarakatState extends State<HalamanLoginMasyarakat> {
                     fontWeight: FontWeight.bold),
               ),
               GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => HalamanPilihUser()));
-                },
                 child: Text('  Ganti',
                     style: TextStyle(
                         fontFamily: 'InriaSans',
@@ -167,12 +159,7 @@ class _HalamanLoginMasyarakatState extends State<HalamanLoginMasyarakat> {
                         fontFamily: 'InriaSans',
                         fontSize: 16.0)),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HalamanDaftarAkun()));
-                  },
+                  
                   child: Text(' Daftar',
                       style: TextStyle(
                           fontFamily: 'InriaSans',
