@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../components/pop_up_konfirmasi_log_out.dart';
 
-class HalamanProfilMasyarakat extends StatelessWidget {
-  final String gambarprofil;
-  final String namaProfil;
+class ProfilePage extends StatefulWidget {
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
 
-  HalamanProfilMasyarakat({required this.namaProfil, required this.gambarprofil});
-
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +24,7 @@ class HalamanProfilMasyarakat extends StatelessWidget {
                   fit: StackFit.expand,
                   children: [
                     CircleAvatar(
-                      backgroundImage: AssetImage(gambarprofil),
+                      backgroundImage: AssetImage('assets/images/arie.jpg'),
                     ),
                     Positioned(
                       bottom: 0,
@@ -46,7 +46,7 @@ class HalamanProfilMasyarakat extends StatelessWidget {
               ),
               SizedBox(height: 35),
               Text(
-                namaProfil,
+                'Arie Irawan',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 80),
@@ -100,7 +100,6 @@ class HalamanProfilMasyarakat extends StatelessWidget {
   }
 }
 
-
 class EditProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -128,4 +127,3 @@ class ChangePasswordPage extends StatelessWidget {
     );
   }
 }
-
