@@ -7,14 +7,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../components/pop_up_berhasil_tambah_barang_penampung.dart';
+import '../../components/pop_up_berhasil_upload_barang_masyarakat.dart';
 import '../../proses/proses_tambah_barang.dart';
 
-class JualBarangPenampung2 extends StatefulWidget {
+class HalamanJualBarangMasyarakat2 extends StatefulWidget {
   @override
-  _JualBarangPenampung2State createState() => _JualBarangPenampung2State();
+  _HalamanJualBarangMasyarakat2State createState() =>
+      _HalamanJualBarangMasyarakat2State();
 }
 
-class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
+class _HalamanJualBarangMasyarakat2State
+    extends State<HalamanJualBarangMasyarakat2> {
   // Mendapatkan data user
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
@@ -34,14 +37,13 @@ class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
   // Variabel untuk menyimpan nilai input dari form
   String? _userId;
   String _namaBarang = '';
-  int _hargaBarang = 0;
   String _kategori = '';
   String _deskripsi = '';
   int _beratBarang = 0;
   String _jasaPengiriman = '';
   String _metodePembayaran = '';
 
-  bool _pesanHarga = false;
+  // Memastikan berat barang telah terisi
   bool _pesanBerat = false;
 
   // Pesan berhasil upload berhasil atau tidak
@@ -56,7 +58,7 @@ class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
     _userId = user?.uid;
     if (_formKey.currentState!.validate() && _selectedFile != null) {
       // Simpan data ke database
-      uploadGambarBarang(_auth, _storage, 'barang_penampung', _selectedFile!,
+      uploadGambarBarang(_auth, _storage, 'barang_masyarakat', _selectedFile!,
           _kategori, _namaBarang);
       tambahBarang(
           _auth,
@@ -69,10 +71,9 @@ class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
           _beratBarang,
           _jasaPengiriman,
           _metodePembayaran,
-          'penampung',
-          _selectedFile,
-          hargaBarang: _hargaBarang);
-      popUpUploadBarangPenampung(context);
+          'masyarakat',
+          _selectedFile);
+      popUpUploadBarangMasyarakat(context);
     } else {
       // Tampilkan pesan kesalahan pada setiap form yang belum diisi dengan benar
       setState(() {
@@ -80,41 +81,6 @@ class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
       });
     }
   }
-  // Future uploadGambarBarang(File imageFile) async {
-  //   // Fungsi untuk mengupload gambar form ke server atau melakukan tindakan lainnya
-  //   User? user = _auth.currentUser;
-  //   _userId = user?.uid;
-  //   String imagePath =
-  //       'barang_penampung/${user?.uid}/$_kategori/$_namaBarang.jpg';
-  //   try {
-  //     TaskSnapshot snapshot = await _storage.ref(imagePath).putFile(imageFile);
-  //     String downloadUrl = await snapshot.ref.getDownloadURL();
-  //     return downloadUrl;
-  //   } on FirebaseException catch (e) {
-  //     print(e);
-  //   }
-  // }
-
-  // Future<void> tambahBarang() {
-  //   // Fungsi tambah barang ke database firestore firebase
-  //   return _db
-  //       .collection('barang')
-  //       .doc()
-  //       .set({
-  //         'id_user': _userId,
-  //         'nama_barang': _namaBarang,
-  //         'harga_barang': _hargaBarang,
-  //         'kategori': _kategori,
-  //         'deskripsi': _deskripsi,
-  //         'berat_barang': _beratBarang,
-  //         'jasa_pengiriman': _jasaPengiriman,
-  //         'metode_pembayaran': _metodePembayaran
-  //       })
-  //       .then((value) => print("User Added"))
-  //       .catchError((error) => print("Failed to add user: $error"));
-  // }
-
-  // validasi form sudah lengkap
 
   @override
   Widget build(BuildContext context) {
@@ -212,27 +178,6 @@ class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
                 },
               ),
               const SizedBox(height: 16.0),
-              TextFormField(
-                decoration: const InputDecoration(labelText: 'Harga Barang'),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Harga barang tidak boleh kosong';
-                  } else if (_pesanHarga) {
-                    return 'Harga barang harus berupa angka';
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  try {
-                    setState(() {
-                      _hargaBarang = int.parse(value);
-                    });
-                  } catch (e) {
-                    _pesanHarga = true;
-                  }
-                },
-              ),
               const SizedBox(height: 16.0),
               Text(
                 'Kategori',

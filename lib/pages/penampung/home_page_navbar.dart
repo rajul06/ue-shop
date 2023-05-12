@@ -47,7 +47,8 @@ class _HalamanBerandaState extends State<HalamanBeranda> {
               preferredSize: const Size.fromHeight(kToolbarHeight - 1.0),
               child: AppBar(
                 automaticallyImplyLeading: false,
-                title: const CustomAppBar(
+                title: CustomAppBar(
+                  selectedIndex: _selectedIndex,
                   showSearch: true,
                 ),
               ),
