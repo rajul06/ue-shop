@@ -1,10 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ue_shop/pages/penampung/halaman_pencarian.dart';
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
+  @override
+  _CustomAppBarState createState() => _CustomAppBarState();
   final bool showSearch;
+  final selectedIndex;
+  const CustomAppBar(
+      {super.key, required this.showSearch, required this.selectedIndex});
 
-  const CustomAppBar({super.key, required this.showSearch});
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+
+  @override
+  // TODO: implement preferredSize
+  Size get preferredSize => throw UnimplementedError();
+}
+
+class _CustomAppBarState extends State<CustomAppBar> {
+  String _querySearch = '';
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +31,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          if (showSearch)
+          if (true)
             Expanded(
                 flex: 1,
                 child: Container(
@@ -21,10 +39,32 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   width: 315,
                   color: Colors.blue,
                   child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        _querySearch = value;
+                      });
+                    },
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(vertical: 1.0),
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          if (_querySearch != '') {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HalamanHasilCari(
+                                          querySearch: _querySearch,
+                                          owner: widget.selectedIndex,
+                                        )));
+                          }
+                        },
+                        child: Icon(
+                          Icons.search,
+                          color: Color(0xFF404040),
+                        ),
+                      ),
                       prefixIcon: SvgPicture.asset(
                         'assets/icons/manage-search-rounded.svg',
                         height: 24,
@@ -51,14 +91,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               onPressed: () {},
               icon: SvgPicture.asset('assets/icons/manage-notification.svg',
                   width: 20, height: 23)),
-          IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset(
-                'assets/icons/manage-setting.svg',
-                width: 35,
-                height: 35,
-              ),
-              alignment: Alignment.bottomCenter)
         ],
       ),
     );

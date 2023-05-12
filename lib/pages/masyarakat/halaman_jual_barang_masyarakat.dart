@@ -17,7 +17,7 @@ class HalamanJualBarangMasyarakat extends StatefulWidget {
 class _HalamanJualBarangPenampung extends State<HalamanJualBarangMasyarakat> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<List<dynamic>> fetchData() async {
+  Future<List<dynamic>> fetchData(jenisAkun) async {
     // Simulasi penundaan jaringan
     await Future.delayed(Duration(seconds: 2));
 
@@ -26,16 +26,11 @@ class _HalamanJualBarangPenampung extends State<HalamanJualBarangMasyarakat> {
     String? _userId = user?.uid;
 
     // Mengambil data dari firebase menggunakan fungsi dibawah, datanya yang dikembalikan sudah dirapikan
-    return await getDataBarangSatuPenampung(_userId);
+    return await getDataBarangSatuUser(_userId, jenisAkun);
   }
 
   @override
   Widget build(BuildContext context) {
-    var currencyFormat = NumberFormat.currency(
-      symbol: "Rp ",
-      decimalDigits: 0,
-      locale: "id_ID",
-    );
     return SingleChildScrollView(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SizedBox(height: 20),
@@ -146,7 +141,7 @@ class _HalamanJualBarangPenampung extends State<HalamanJualBarangMasyarakat> {
           padding:
               EdgeInsets.only(top: 5.0, right: 19.0, bottom: 19.0, left: 19.0),
           child: FutureBuilder<List<dynamic>>(
-            future: fetchData(),
+            future: fetchData('masyarakat'),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 // Ketika data masih dimuat, tampilkan indikator loading
@@ -165,7 +160,7 @@ class _HalamanJualBarangPenampung extends State<HalamanJualBarangMasyarakat> {
                       (index) => buildCardJualBarang(
                           context,
                           items[index]['namaBarang'],
-                          currencyFormat.format(items[index]['hargaBarang']),
+                          '',
                           items[index]['lokasi'],
                           items[index]['urlDownload'],
                           () {})),

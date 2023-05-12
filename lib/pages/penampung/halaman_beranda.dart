@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ue_shop/components/build_barang_beranda.dart';
-
 import '../../proses/proses_getData.dart';
 import 'detail_barang.dart';
+import 'package:intl/intl.dart';
 
 class HomePageBarangPenampung extends StatelessWidget {
   Future<List<dynamic>> fetchData() async {
@@ -11,7 +11,7 @@ class HomePageBarangPenampung extends StatelessWidget {
     await Future.delayed(Duration(seconds: 2));
 
     // Mengambil data dari firebase menggunakan fungsi dibawah, datanya yang dikembalikan sudah dirapikan
-    return await getDataBarangPenampung();
+    return await getDataBarang('penampung');
   }
 
   static const kategoriTitleStyle = TextStyle(
@@ -55,6 +55,11 @@ class HomePageBarangPenampung extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var currencyFormat = NumberFormat.currency(
+      symbol: "Rp ",
+      decimalDigits: 0,
+      locale: "id_ID",
+    );
     return SingleChildScrollView(
       child: Column(children: <Widget>[
         Stack(children: <Widget>[
@@ -173,23 +178,23 @@ class HomePageBarangPenampung extends StatelessWidget {
                                 items.length,
                                 (index) => buildCardBarang(
                                         items[index]['namaBarang'],
-                                        items[index]['hargaBarang'].toString(),
+                                        currencyFormat.format(
+                                            items[index]['hargaBarang']),
                                         items[index]['lokasi'],
                                         items[index]['urlDownload'], () {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              ProductDetailPage(
-                                            productName: items[index]
+                                              HalamanDetailBarang(
+                                            namaBarang: items[index]
                                                 ['namaBarang'],
-                                            productImage: AssetImage(
-                                                'assets/images/test_images.png'),
-                                            productPrice: items[index]
-                                                    ['hargaBarang']
-                                                .toString(),
-                                            productDeskription:
-                                                "barang mahal ini boss.",
+                                            gambarBarang: items[index]
+                                                ['urlDownload'],
+                                            hargaBarang: currencyFormat.format(
+                                                items[index]['hargaBarang']),
+                                            deskripsiBarang: items[index]
+                                                ['deskripsi'],
                                           ),
                                         ),
                                       );

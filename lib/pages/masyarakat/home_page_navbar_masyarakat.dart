@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ue_shop/pages/masyarakat/halaman_jual_barang_masyarakat.dart';
 import 'package:ue_shop/pages/penampung/halaman_beranda.dart';
 import 'package:ue_shop/pages/penampung/halaman_jual_barang_penampung.dart';
 
@@ -24,7 +25,7 @@ class _HalamanBerandaMasyarakatState extends State<HalamanBerandaMasyarakat> {
   final List<Widget> _widgetOptions = [
     // Add your widget options here
     const HomePageBarangPenampung(),
-    const JualBarangPenampung(),
+    const HalamanJualBarangMasyarakat(),
     ProfilePage(
         name: 'udin',
         imageUrl:
@@ -47,6 +48,7 @@ class _HalamanBerandaMasyarakatState extends State<HalamanBerandaMasyarakat> {
               child: AppBar(
                 automaticallyImplyLeading: false,
                 title: const CustomAppBar(
+                  selectedIndex: 0,
                   showSearch: true,
                 ),
               ),

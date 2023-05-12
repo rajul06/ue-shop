@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 
-class ProductDetailPage extends StatelessWidget {
-  final String productName;
-  final ImageProvider<Object> productImage;
-  final String productPrice;
-  final String productDeskription;
+class HalamanDetailBarang extends StatelessWidget {
+  final String namaBarang;
+  final String gambarBarang;
+  final String hargaBarang;
+  final String deskripsiBarang;
 
-  const ProductDetailPage(
+  const HalamanDetailBarang(
       {Key? key,
-      required this.productName,
-      required this.productImage,
-      required this.productPrice,
-      required this.productDeskription})
+      required this.namaBarang,
+      required this.gambarBarang,
+      required this.hargaBarang,
+      required this.deskripsiBarang})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Nama Barang', style: TextStyle(color: Colors.black)),
+        title: Text(namaBarang,
+            style: TextStyle(fontFamily: 'InriaSans', color: Colors.black)),
         backgroundColor: Colors.white,
         leading: IconButton(
           icon: Icon(
@@ -32,8 +33,8 @@ class ProductDetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image(
-              image: productImage,
+            Image.network(
+              gambarBarang,
               height: 300,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -51,23 +52,29 @@ class ProductDetailPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Rp. $productPrice',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    hargaBarang,
+                    style: TextStyle(
+                        fontFamily: 'InriaSans',
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 5),
                   Text(
-                    productName,
-                    style: TextStyle(fontSize: 16),
+                    namaBarang,
+                    style: TextStyle(fontFamily: 'InriaSans', fontSize: 16),
                   ),
                   SizedBox(height: 50),
                   Text(
                     'Deskripsi',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontFamily: 'InriaSans',
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 5),
                   Text(
-                    productDeskription,
-                    style: TextStyle(fontSize: 16),
+                    deskripsiBarang,
+                    style: TextStyle(fontFamily: 'InriaSans', fontSize: 16),
                     textAlign: TextAlign.justify,
                   ),
                 ],
@@ -84,7 +91,12 @@ class ProductDetailPage extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () {},
-                child: Text('Hubungi Penjual'),
+                child: Text(
+                  'Hubungi Penjual',
+                  style: TextStyle(
+                    fontFamily: 'InriaSans',
+                  ),
+                ),
                 style: ElevatedButton.styleFrom(
                   fixedSize: Size(180, 30),
                   shape: RoundedRectangleBorder(
@@ -94,7 +106,12 @@ class ProductDetailPage extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {},
-                child: Text('Beli'),
+                child: Text(
+                  'Beli',
+                  style: TextStyle(
+                    fontFamily: 'InriaSans',
+                  ),
+                ),
                 style: ElevatedButton.styleFrom(
                   fixedSize: Size(180, 30),
                   shape: RoundedRectangleBorder(

@@ -1,14 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:ue_shop/pages/halaman_pilih_user_role.dart';
+import '../halaman_daftar_akun.dart';
 import 'home_page_navbar.dart';
 
-class LoginPage extends StatefulWidget {
+class HalamanLoginPenampung extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _HalamanLoginPenampungState createState() => _HalamanLoginPenampungState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _HalamanLoginPenampungState extends State<HalamanLoginPenampung> {
   final TextEditingController _passwordController = TextEditingController();
   bool _passwordVisible = false;
   bool _isPasswordValid = true;
@@ -69,6 +71,30 @@ class _LoginPageState extends State<LoginPage> {
                   color: Color(0xFF0095DA),
                   fontSize: 25),
             ),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text(
+                'Sebagai Penampung',
+                style: TextStyle(
+                    color: Color(0xFF9E9E9E),
+                    fontFamily: 'InriaSans',
+                    fontSize: 13.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HalamanPilihUser()));
+                },
+                child: Text('  Ganti',
+                    style: TextStyle(
+                        fontFamily: 'InriaSans',
+                        fontSize: 13.0,
+                        decoration: TextDecoration.underline,
+                        color: Color(0xFF0095DA))),
+              ),
+            ]),
             Container(
               width: double.infinity,
               child: Text(
@@ -136,9 +162,18 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text('Belum punya akun?',
-                    style: TextStyle(fontFamily: 'InriaSans', fontSize: 16.0)),
+                    style: TextStyle(
+                      color: Color(0xFF9E9E9E),
+                      fontFamily: 'InriaSans',
+                      fontSize: 16.0,
+                    )),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HalamanDaftarAkun()));
+                  },
                   child: Text(' Daftar',
                       style: TextStyle(
                           fontFamily: 'InriaSans',

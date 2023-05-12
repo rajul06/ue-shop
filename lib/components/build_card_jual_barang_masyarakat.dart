@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-Widget buildCardJualBarang(BuildContext context, String namaBarang,
-    String hargaBarang, String lokasi, image, VoidCallback onPressed) {
+Widget buildCardJualBarangMasyarakat(BuildContext context, String namaBarang,
+    String lokasi, image, VoidCallback onPressed) {
   return Container(
     margin: const EdgeInsets.all(10.0),
     decoration: BoxDecoration(
@@ -47,11 +47,6 @@ Widget buildCardJualBarang(BuildContext context, String namaBarang,
                             fontFamily: 'InriaSans',
                             fontSize: 12.0,
                             fontWeight: FontWeight.normal)),
-                    Text(hargaBarang,
-                        style: TextStyle(
-                            fontFamily: 'InriaSans',
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.bold))
                   ]))
         ],
       ),

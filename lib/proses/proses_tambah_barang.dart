@@ -8,16 +8,16 @@ Future<void> tambahBarang(
     db,
     userId,
     namaBarang,
-    hargaBarang,
     kategori,
     deskripsi,
     beratBarang,
     jasaPengiriman,
     metodePembayaran,
-    jenis_akun,
-    imageFile) async {
-  var imagePath =
-      await uploadGambarBarang(auth, storage, imageFile, kategori, namaBarang);
+    jenisAkun,
+    imageFile,
+    {hargaBarang = ''}) async {
+  var imagePath = await uploadGambarBarang(
+      auth, storage, jenisAkun, imageFile, kategori, namaBarang);
   // Fungsi tambah barang ke database firestore firebase
   return db.collection('barang').doc().set({
     'id_user': userId,
@@ -28,17 +28,17 @@ Future<void> tambahBarang(
     'berat_barang': beratBarang,
     'jasa_pengiriman': jasaPengiriman,
     'metode_pembayaran': metodePembayaran,
-    'jenis_akun': jenis_akun,
+    'jenis_akun': jenisAkun,
     'lokasi': 'Banda Aceh',
     'url_download': imagePath,
   }).catchError((error) => print("Failed to add user: $error"));
 }
 
 Future uploadGambarBarang(
-    auth, storage, File imageFile, kategori, namaBarang) async {
+    auth, storage, jenisAkun, File imageFile, kategori, namaBarang) async {
   // Fungsi untuk mengupload gambar form ke server atau melakukan tindakan lainnya
   User? user = auth.currentUser;
-  String imagePath = 'barang_penampung/${user?.uid}/$kategori/$namaBarang.jpg';
+  String imagePath = '$jenisAkun/${user?.uid}/$kategori/$namaBarang.jpg';
   try {
     TaskSnapshot snapshot = await storage.ref(imagePath).putFile(imageFile);
     String downloadUrl = await snapshot.ref.getDownloadURL();
