@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 Widget buildCardJualBarang(BuildContext context, String namaBarang,
     String hargaBarang, String lokasi, image, VoidCallback onPressed) {
+  var currencyFormat = NumberFormat.currency(
+    symbol: "Rp ",
+    decimalDigits: 0,
+    locale: "id_ID",
+  );
+  var hargaBarangFormat = hargaBarang;
+  if (hargaBarang != '') {
+    hargaBarangFormat = currencyFormat.format(hargaBarang);
+  }
   return Container(
     margin: const EdgeInsets.all(10.0),
     decoration: BoxDecoration(
@@ -42,7 +52,7 @@ Widget buildCardJualBarang(BuildContext context, String namaBarang,
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(namaBarang,
+                    Text(hargaBarangFormat,
                         style: TextStyle(
                             fontFamily: 'InriaSans',
                             fontSize: 12.0,
