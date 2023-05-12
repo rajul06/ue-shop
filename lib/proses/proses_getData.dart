@@ -71,17 +71,19 @@ Future<List> getDataBarangSatuUser(idUser, jenisAkun) async {
   return hasil;
 }
 
-Future<List> getDataBarangSearch(jenisAkun, querySearch) async {
+Future<List> getDataBarangSearch(querySearch, jenisAkun) async {
   List hasil = [];
   // Mendapatkan referensi ke koleksi "users"
   CollectionReference users = FirebaseFirestore.instance.collection('barang');
 
   // Mendapatkan data dari koleksi "users"
-  QuerySnapshot querySnapshot = await users
-      .where('jenis_akun', isEqualTo: jenisAkun)
-      .where('nama_barang', isEqualTo: querySearch)
-      .get();
+  QuerySnapshot querySnapshot =
+      await users.where('jenis_akun', isEqualTo: jenisAkun).get();
+  print('-----------------------');
 
+  print('masyarakat' == jenisAkun);
+  print(jenisAkun + querySearch);
+  print(querySnapshot.docs);
   // Looping untuk mendapatkan data setiap dokumen pada querySnapshot
   querySnapshot.docs.forEach((doc) {
     var data = {};
@@ -96,7 +98,11 @@ Future<List> getDataBarangSearch(jenisAkun, querySearch) async {
     data['lokasi'] = doc['lokasi'];
     data['metodePembayaran'] = doc['metode_pembayaran'];
     data['urlDownload'] = doc['url_download'];
-    hasil.add(data);
+    if (data['namaBarang'].toLowerCase().contains(querySearch)) {
+      hasil.add(data);
+    }
+    print(data['namaBarang']);
+    print(data['namaBarang'].toLowerCase().contains(querySearch));
   });
   return hasil;
 }

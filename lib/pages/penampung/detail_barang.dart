@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class HalamanDetailBarang extends StatelessWidget {
   final String namaBarang;
@@ -16,6 +17,15 @@ class HalamanDetailBarang extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var currencyFormat = NumberFormat.currency(
+      symbol: "Rp ",
+      decimalDigits: 0,
+      locale: "id_ID",
+    );
+    var hargaBarangFormat = hargaBarang;
+    if (hargaBarang != '') {
+      hargaBarangFormat = currencyFormat.format(hargaBarang);
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(namaBarang,
@@ -52,7 +62,7 @@ class HalamanDetailBarang extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    hargaBarang,
+                    hargaBarangFormat,
                     style: TextStyle(
                         fontFamily: 'InriaSans',
                         fontSize: 20,

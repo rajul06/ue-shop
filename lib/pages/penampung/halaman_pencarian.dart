@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ue_shop/pages/penampung/detail_barang.dart';
 import '../../components/build_card_jual_barang.dart';
 import '../../proses/proses_getData.dart';
 import 'package:intl/intl.dart';
@@ -70,12 +71,23 @@ class _HalamanHasilCariState extends State<HalamanHasilCari> {
                 children: List.generate(
                     items.length,
                     (index) => buildCardJualBarang(
-                        context,
-                        items[index]['namaBarang'],
-                        currencyFormat.format(items[index]['hargaBarang']),
-                        items[index]['lokasi'],
-                        items[index]['urlDownload'],
-                        () {})),
+                            context,
+                            items[index]['namaBarang'],
+                            items[index]['hargaBarang'],
+                            items[index]['lokasi'],
+                            items[index]['urlDownload'], () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HalamanDetailBarang(
+                                namaBarang: items[index]['namaBarang'],
+                                gambarBarang: items[index]['urlDownload'],
+                                hargaBarang: items[index]['hargaBarang'],
+                                deskripsiBarang: items[index]['deskripsi'],
+                              ),
+                            ),
+                          );
+                        })),
               );
             }
           },
