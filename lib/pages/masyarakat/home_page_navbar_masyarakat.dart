@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ue_shop/pages/masyarakat/halaman_jual_barang_masyarakat.dart';
+import 'package:ue_shop/pages/masyarakat/halaman_profil_masyarakat.dart';
 import 'package:ue_shop/pages/penampung/halaman_beranda.dart';
 import 'package:ue_shop/pages/penampung/halaman_jual_barang_penampung.dart';
 
@@ -26,10 +27,7 @@ class _HalamanBerandaMasyarakatState extends State<HalamanBerandaMasyarakat> {
     // Add your widget options here
     const HomePageBarangPenampung(),
     const HalamanJualBarangMasyarakat(),
-    ProfilePage(
-        name: 'udin',
-        imageUrl:
-            'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.flaticon.com%2Ffree-icon%2Fprofile_3135715&psig=AOvVaw3KasBrsps_roxsK-xRaOvI&ust=1682794672456000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCPjK3uegzf4CFQAAAAAdAAAAABAE'),
+    HalamanProfilMasyarakat(),
   ];
 
   void _onItemTapped(int index) {

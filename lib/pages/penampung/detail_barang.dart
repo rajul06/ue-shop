@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 class HalamanDetailBarang extends StatelessWidget {
   final String namaBarang;
   final String gambarBarang;
-  final String hargaBarang;
+  final hargaBarang;
   final String deskripsiBarang;
 
   const HalamanDetailBarang(
