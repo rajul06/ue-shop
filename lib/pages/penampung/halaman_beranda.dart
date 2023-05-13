@@ -177,9 +177,9 @@ class HomePageBarangPenampung extends StatelessWidget {
                             children: List.generate(
                                 items.length,
                                 (index) => buildCardBarang(
+                                        context,
                                         items[index]['namaBarang'],
-                                        currencyFormat.format(
-                                            items[index]['hargaBarang']),
+                                        items[index]['hargaBarang'],
                                         items[index]['lokasi'],
                                         items[index]['urlDownload'], () {
                                       Navigator.push(
@@ -191,8 +191,8 @@ class HomePageBarangPenampung extends StatelessWidget {
                                                 ['namaBarang'],
                                             gambarBarang: items[index]
                                                 ['urlDownload'],
-                                            hargaBarang: currencyFormat.format(
-                                                items[index]['hargaBarang']),
+                                            hargaBarang: items[index]
+                                                ['hargaBarang'],
                                             deskripsiBarang: items[index]
                                                 ['deskripsi'],
                                           ),

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import '../../components/pop_up_konfirmasi_log_out.dart';
 
-class ProfilePage extends StatefulWidget {
+class HalamanProfilMasyarakat extends StatefulWidget {
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _HalamanProfilMasyarakatState createState() =>
+      _HalamanProfilMasyarakatState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _HalamanProfilMasyarakatState extends State<HalamanProfilMasyarakat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +25,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   fit: StackFit.expand,
                   children: [
                     CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/arie.jpg'),
+                      backgroundImage:
+                          AssetImage('assets/images/jul_profile.jpg'),
                     ),
                     Positioned(
                       bottom: 0,
@@ -36,7 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           onPressed: () {
                             // TODO: implement logic to change profile picture
                           },
-                          icon: Icon(Icons.camera_alt, color: Colors.white), 
+                          icon: Icon(Icons.camera_alt, color: Colors.white),
                           iconSize: 40.0,
                         ),
                       ),
@@ -57,8 +59,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     MaterialPageRoute(builder: (context) => EditProfilePage()),
                   );
                 },
-                icon: Icon(Icons.person, color: Colors.black,),
-                label: Text('Ubah Profil', style: TextStyle (color :Colors.black, fontSize: 17)),
+                icon: Icon(
+                  Icons.person,
+                  color: Colors.black,
+                ),
+                label: Text('Ubah Profil',
+                    style: TextStyle(color: Colors.black, fontSize: 17)),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.white, // ubah warna latar belakang
                   elevation: 0, // set nilai elevation menjadi 0
@@ -69,11 +75,16 @@ class _ProfilePageState extends State<ProfilePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ChangePasswordPage()),
+                    MaterialPageRoute(
+                        builder: (context) => ChangePasswordPage()),
                   );
                 },
-                icon: Icon(Icons.key, color: Colors.black,),
-                label: Text('Ubah Password', style: TextStyle (color :Colors.black, fontSize: 17)),
+                icon: Icon(
+                  Icons.key,
+                  color: Colors.black,
+                ),
+                label: Text('Ubah Password',
+                    style: TextStyle(color: Colors.black, fontSize: 17)),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.white,
                   elevation: 0, // set nilai elevation menjadi 0
@@ -86,7 +97,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   // TODO: implement logic to logout
                 },
                 icon: Icon(Icons.logout, color: Colors.red),
-                label: Text('Logout', style: TextStyle (color :Colors.red, fontSize: 17)),
+                label: Text('Logout',
+                    style: TextStyle(color: Colors.red, fontSize: 17)),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.white,
                   elevation: 0,

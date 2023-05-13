@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:ue_shop/components/build_card_jual_barang_masyarakat.dart';
+import 'package:ue_shop/pages/penampung/detail_barang.dart';
 import '../../components/build_card_jual_barang.dart';
 import '../../proses/proses_getData.dart';
 import 'package:intl/intl.dart';
@@ -157,13 +159,23 @@ class _HalamanJualBarangPenampung extends State<HalamanJualBarangMasyarakat> {
                   alignment: WrapAlignment.spaceBetween,
                   children: List.generate(
                       items.length,
-                      (index) => buildCardJualBarang(
-                          context,
-                          items[index]['namaBarang'],
-                          '',
-                          items[index]['lokasi'],
-                          items[index]['urlDownload'],
-                          () {})),
+                      (index) => buildCardJualBarangMasyarakat(
+                              context,
+                              items[index]['namaBarang'],
+                              items[index]['lokasi'],
+                              items[index]['urlDownload'], () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HalamanDetailBarang(
+                                  namaBarang: items[index]['namaBarang'],
+                                  gambarBarang: items[index]['urlDownload'],
+                                  hargaBarang: items[index]['hargaBarang'],
+                                  deskripsiBarang: items[index]['deskripsi'],
+                                ),
+                              ),
+                            );
+                          })),
                 );
               }
             },

@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-Widget buildCardBarang(String namaBarang, String hargaBarang, String lokasi,
-    image, VoidCallback onPressed) {
+Widget buildCardBarang(BuildContext context, String namaBarang, hargaBarang,
+    String lokasi, image, VoidCallback onPressed) {
+  var currencyFormat = NumberFormat.currency(
+    symbol: "Rp ",
+    decimalDigits: 0,
+    locale: "id_ID",
+  );
+  var hargaBarangFormat = hargaBarang;
+  if (hargaBarang != '') {
+    hargaBarangFormat = currencyFormat.format(hargaBarang);
+  }
   hargaBarang = '$hargaBarang';
   return GestureDetector(
     onTap: onPressed,
@@ -48,7 +58,7 @@ Widget buildCardBarang(String namaBarang, String hargaBarang, String lokasi,
                             fontFamily: 'InriaSans',
                             fontSize: 12.0,
                             fontWeight: FontWeight.normal)),
-                    Text(hargaBarang,
+                    Text(hargaBarangFormat,
                         style: TextStyle(
                             fontFamily: 'InriaSans',
                             fontSize: 14.0,
