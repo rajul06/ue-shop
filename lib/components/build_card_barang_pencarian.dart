@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-Widget buildCardJualBarang(BuildContext context, String namaBarang, hargaBarang,
-    String lokasi, image, VoidCallback onPressed) {
+Widget buildCardBarangPencarian(BuildContext context, String namaBarang,
+    hargaBarang, String lokasi, image, VoidCallback onPressed) {
   var currencyFormat = NumberFormat.currency(
     symbol: "Rp ",
     decimalDigits: 0,

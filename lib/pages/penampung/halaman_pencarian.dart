@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ue_shop/components/build_card_barang_pencarian.dart';
 import 'package:ue_shop/pages/penampung/detail_barang.dart';
-import '../../components/build_card_jual_barang.dart';
 import '../../proses/proses_getData.dart';
 import 'package:intl/intl.dart';
 
@@ -46,8 +46,10 @@ class _HalamanHasilCariState extends State<HalamanHasilCari> {
     );
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xFF0095DA),
         title: Text(
           widget.querySearch,
+          style: const TextStyle(fontFamily: 'InriaSans'),
         ),
       ),
       body: Padding(
@@ -70,7 +72,7 @@ class _HalamanHasilCariState extends State<HalamanHasilCari> {
                 alignment: WrapAlignment.spaceBetween,
                 children: List.generate(
                     items.length,
-                    (index) => buildCardJualBarang(
+                    (index) => buildCardBarangPencarian(
                             context,
                             items[index]['namaBarang'],
                             items[index]['hargaBarang'],
