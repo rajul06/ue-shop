@@ -79,11 +79,6 @@ Future<List> getDataBarangSearch(querySearch, jenisAkun) async {
   // Mendapatkan data dari koleksi "users"
   QuerySnapshot querySnapshot =
       await users.where('jenis_akun', isEqualTo: jenisAkun).get();
-  print('-----------------------');
-
-  print('masyarakat' == jenisAkun);
-  print(jenisAkun + querySearch);
-  print(querySnapshot.docs);
   // Looping untuk mendapatkan data setiap dokumen pada querySnapshot
   querySnapshot.docs.forEach((doc) {
     var data = {};
@@ -101,8 +96,6 @@ Future<List> getDataBarangSearch(querySearch, jenisAkun) async {
     if (data['namaBarang'].toLowerCase().contains(querySearch)) {
       hasil.add(data);
     }
-    print(data['namaBarang']);
-    print(data['namaBarang'].toLowerCase().contains(querySearch));
   });
   return hasil;
 }

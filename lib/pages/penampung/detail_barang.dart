@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:ue_shop/components/pop_up_edit_barang.dart';
 
 class HalamanDetailBarang extends StatelessWidget {
   final String namaBarang;
   final String gambarBarang;
   final hargaBarang;
   final String deskripsiBarang;
+  final bool showEditButton = true;
 
   const HalamanDetailBarang(
       {Key? key,
@@ -38,6 +40,25 @@ class HalamanDetailBarang extends StatelessWidget {
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
+        actions: [
+          showEditButton
+              ? Padding(
+                  padding: EdgeInsets.only(left: 16.0),
+                  child: TextButton(
+                      onPressed: () {
+                        popUpEditBarangMasyarakat(context);
+                      },
+                      child: const Text(
+                        'Edit',
+                        style: TextStyle(
+                            fontFamily: 'InriaSans',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18.0,
+                            color: Color(0xFF0095DA)),
+                      )),
+                )
+              : SizedBox()
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
