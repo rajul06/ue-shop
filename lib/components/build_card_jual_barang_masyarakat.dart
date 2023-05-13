@@ -47,6 +47,15 @@ Widget buildCardJualBarangMasyarakat(BuildContext context, String namaBarang,
                             fontFamily: 'InriaSans',
                             fontSize: 12.0,
                             fontWeight: FontWeight.normal)),
+                    SizedBox(
+                      height: 16.0,
+                    ),
+                    Text(lokasi,
+                        style: TextStyle(
+                            color: Color(0xFF404040),
+                            fontFamily: 'InriaSans',
+                            fontSize: 10.0,
+                            fontWeight: FontWeight.normal))
                   ]))
         ],
       ),

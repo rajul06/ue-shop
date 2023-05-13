@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-Widget buildCardJualBarang(BuildContext context, String namaBarang,
-    String hargaBarang, String lokasi, image, VoidCallback onPressed) {
+Widget buildCardJualBarang(BuildContext context, String namaBarang, hargaBarang,
+    String lokasi, image, VoidCallback onPressed) {
   var currencyFormat = NumberFormat.currency(
     symbol: "Rp ",
     decimalDigits: 0,
@@ -52,16 +52,22 @@ Widget buildCardJualBarang(BuildContext context, String namaBarang,
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(hargaBarangFormat,
+                    Text(namaBarang,
                         style: TextStyle(
                             fontFamily: 'InriaSans',
                             fontSize: 12.0,
                             fontWeight: FontWeight.normal)),
-                    Text(hargaBarang,
+                    Text(hargaBarangFormat,
                         style: TextStyle(
                             fontFamily: 'InriaSans',
                             fontSize: 14.0,
-                            fontWeight: FontWeight.bold))
+                            fontWeight: FontWeight.bold)),
+                    Text(lokasi,
+                        style: TextStyle(
+                            color: Color(0xFF404040),
+                            fontFamily: 'InriaSans',
+                            fontSize: 10.0,
+                            fontWeight: FontWeight.normal))
                   ]))
         ],
       ),
