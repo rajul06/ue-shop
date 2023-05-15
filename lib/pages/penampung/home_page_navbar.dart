@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ue_shop/pages/penampung/halaman_barang_bekas_masyarakat.dart';
 import 'package:ue_shop/pages/penampung/halaman_beranda.dart';
 import 'package:ue_shop/pages/penampung/halaman_jual_barang_penampung.dart';
-import 'halaman_profil.dart';
+import 'package:ue_shop/pages/penampung/halaman_profil_penampung.dart';
 import '../../components/custom_app_bar.dart';
 
 class HalamanBeranda extends StatefulWidget {
@@ -26,10 +26,7 @@ class _HalamanBerandaState extends State<HalamanBeranda> {
     const HomePageBarangPenampung(),
     const JualBarangPenampung(),
     const HomePageBarangMasyarakat(),
-    ProfilePage(
-        name: 'udin',
-        imageUrl:
-            'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.flaticon.com%2Ffree-icon%2Fprofile_3135715&psig=AOvVaw3KasBrsps_roxsK-xRaOvI&ust=1682794672456000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCPjK3uegzf4CFQAAAAAdAAAAABAE'),
+    HalamanProfilPenampung()
   ];
 
   void _onItemTapped(int index) {

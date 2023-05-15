@@ -58,8 +58,6 @@ class _HalamanJualBarangMasyarakat2State
     _userId = user?.uid;
     if (_formKey.currentState!.validate() && _selectedFile != null) {
       // Simpan data ke database
-      uploadGambarBarang(_auth, _storage, 'barang_masyarakat', _selectedFile!,
-          _kategori, _namaBarang);
       tambahBarang(
           _auth,
           _storage,

@@ -2,13 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../components/pop_up_konfirmasi_log_out.dart';
 
-class HalamanProfilMasyarakat extends StatefulWidget {
+class HalamanProfilPenampung extends StatefulWidget {
   @override
-  _HalamanProfilMasyarakatState createState() =>
-      _HalamanProfilMasyarakatState();
+  _HalamanProfilPenampungState createState() => _HalamanProfilPenampungState();
 }
 
-class _HalamanProfilMasyarakatState extends State<HalamanProfilMasyarakat> {
+class _HalamanProfilPenampungState extends State<HalamanProfilPenampung> {
   // Fungsi Logout akun
   void _logout() async {
     await FirebaseAuth.instance.signOut();

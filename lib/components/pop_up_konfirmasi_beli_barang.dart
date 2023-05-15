@@ -1,35 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:ue_shop/pages/masyarakat/home_page_navbar_masyarakat.dart';
 
-void popUpKonfirmasiBeliBarang(BuildContext context) {
+import '../proses/proses_tambah_barang.dart';
+
+void popUpKonfirmasiBeliBarang(BuildContext context, auth, storage, db, idUser,
+    namaBarang, idPembeli, image, jasaPengiriman, metodePembayaran, idDokumen,
+    {hargaBarang = ''}) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return Center(
-        child : AlertDialog(
-        title: Text("Konfirmasi Pembelian", textAlign: TextAlign.center),
-        content: Text("Apakah Anda yakin ingin membeli barang ini?", textAlign: TextAlign.center),
-        actions: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text("Batal"),
-              ),
-
-              SizedBox(width: 16,),
-
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  showCheckmarkDialog(context);
-                },
-                child: Text("Bayar"),
-              ),
-            ],
-          )
-        ],
-      ),
+        child: AlertDialog(
+          title: Text("Konfirmasi Pembelian", textAlign: TextAlign.center),
+          content: Text("Apakah Anda yakin ingin membeli barang ini?",
+              textAlign: TextAlign.center),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text("Batal"),
+                ),
+                SizedBox(
+                  width: 16,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    tambahBeliBarang(
+                        auth,
+                        storage,
+                        db,
+                        idUser,
+                        namaBarang,
+                        idPembeli,
+                        image,
+                        jasaPengiriman,
+                        metodePembayaran,
+                        idDokumen,
+                        hargaBarang: hargaBarang);
+                    Navigator.pop(context);
+                    showCheckmarkDialog(context);
+                  },
+                  child: Text("Bayar"),
+                ),
+              ],
+            )
+          ],
+        ),
       );
     },
   );
@@ -50,7 +68,10 @@ void showCheckmarkDialog(BuildContext context) {
               Text("Pembayaran berhasil."),
               SizedBox(height: 10.0),
               ElevatedButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: ((context) => HalamanBerandaMasyarakat()))),
                 child: Text("OK"),
               ),
             ],

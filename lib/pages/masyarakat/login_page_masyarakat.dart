@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:ue_shop/pages/masyarakat/halaman_profil_masyarakat.dart';
 import 'package:ue_shop/pages/masyarakat/home_page_navbar_masyarakat.dart';
 
+import '../halaman_pilih_user_role.dart';
+
 class HalamanLoginMasyarakat extends StatefulWidget {
   @override
   _HalamanLoginMasyarakatState createState() => _HalamanLoginMasyarakatState();
@@ -80,6 +82,12 @@ class _HalamanLoginMasyarakatState extends State<HalamanLoginMasyarakat> {
                     fontWeight: FontWeight.bold),
               ),
               GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HalamanPilihUser()));
+                },
                 child: Text('  Ganti',
                     style: TextStyle(
                         fontFamily: 'InriaSans',

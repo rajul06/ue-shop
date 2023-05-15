@@ -168,10 +168,17 @@ class _HalamanJualBarangPenampung extends State<HalamanJualBarangMasyarakat> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => HalamanDetailBarang(
+                                  idDokumen: items[index]['idDokumen'],
+                                  showEditButton: true,
                                   namaBarang: items[index]['namaBarang'],
                                   gambarBarang: items[index]['urlDownload'],
                                   hargaBarang: items[index]['hargaBarang'],
                                   deskripsiBarang: items[index]['deskripsi'],
+                                  idUser: items[index]['idUser'],
+                                  jasaPengiriman: items[index]
+                                      ['jasaPengiriman'],
+                                  metodePembayaran: items[index]
+                                      ['metodePembayaran'],
                                 ),
                               ),
                             );

@@ -1,21 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ue_shop/components/pop_up_edit_barang.dart';
+import 'package:ue_shop/pages/masyarakat/halaman_beli_barang.dart';
 
 class HalamanDetailBarang extends StatelessWidget {
   final String namaBarang;
   final String gambarBarang;
   final hargaBarang;
   final String deskripsiBarang;
-  final bool showEditButton = true;
+  final String idUser;
+  final String jasaPengiriman;
+  final String metodePembayaran;
+  final bool showEditButton;
+  final String idDokumen;
 
-  const HalamanDetailBarang(
-      {Key? key,
-      required this.namaBarang,
-      required this.gambarBarang,
-      required this.hargaBarang,
-      required this.deskripsiBarang})
-      : super(key: key);
+  const HalamanDetailBarang({
+    Key? key,
+    required this.idDokumen,
+    required this.namaBarang,
+    required this.gambarBarang,
+    required this.hargaBarang,
+    required this.deskripsiBarang,
+    required this.idUser,
+    required this.jasaPengiriman,
+    required this.metodePembayaran,
+    required this.showEditButton,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,14 +58,16 @@ class HalamanDetailBarang extends StatelessWidget {
                       onPressed: () {
                         popUpEditBarangMasyarakat(context);
                       },
-                      child: const Text(
-                        'Edit',
-                        style: TextStyle(
-                            fontFamily: 'InriaSans',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.0,
-                            color: Color(0xFF0095DA)),
-                      )),
+                      child: showEditButton
+                          ? const Text(
+                              'Edit',
+                              style: TextStyle(
+                                  fontFamily: 'InriaSans',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18.0,
+                                  color: Color(0xFF0095DA)),
+                            )
+                          : SizedBox()),
                 )
               : SizedBox()
         ],
@@ -136,7 +148,21 @@ class HalamanDetailBarang extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HalamanBeliBarang(
+                                idDokumen: idDokumen,
+                                namaBarang: namaBarang,
+                                hargaBarang: hargaBarang,
+                                gambarBarang: gambarBarang,
+                                deskripsiBarang: deskripsiBarang,
+                                idUser: idUser,
+                                jasaPengiriman: jasaPengiriman,
+                                metodePembayaran: metodePembayaran,
+                              )));
+                },
                 child: Text(
                   'Beli',
                   style: TextStyle(

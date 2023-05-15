@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:ue_shop/proses/proses_getData.dart';
 
 Future<void> tambahBarang(
     auth,
@@ -46,4 +48,53 @@ Future uploadGambarBarang(
   } on FirebaseException catch (e) {
     print(e);
   }
+}
+
+Future<void> tambahBeliBarang(auth, storage, db, idUser, namaBarang, idPembeli,
+    image, jasaPengiriman, metodePembayaran, idDokumen,
+    {hargaBarang = ''}) async {
+  tambahBeliBarangKeTemp(db, idDokumen);
+  // Fungsi tambah barang ke database firestore firebase
+  return db.collection('transaksi').doc().set({
+    'id_barang': idDokumen,
+    'id_penjual': idUser,
+    'id_pembeli': idPembeli,
+    'nama_barang': namaBarang,
+    'harga_barang': hargaBarang,
+    'jasa_pengiriman': jasaPengiriman,
+    'metode_pembayaran': metodePembayaran,
+    'lokasi': 'Banda Aceh',
+    'url_download': image,
+  }).catchError((error) => print("Failed to add user: $error"));
+}
+
+Future<void> tambahBeliBarangKeTemp(db, idDokumen) async {
+  var data = await getDataSatuBarang(idDokumen);
+
+  await Future.delayed(Duration(seconds: 2));
+  // Fungsi tambah barang ke database firestore firebase
+  db.collection('temp').doc(idDokumen).set({
+    'id_user': data[0]['idUser'],
+    'nama_barang': data[0]['namaBarang'],
+    'harga_barang': data[0]['hargaBarang'],
+    'kategori': data[0]['kategori'],
+    'deskripsi': data[0]['deskripsi'],
+    'berat_barang': data[0]['berat_barang'],
+    'jasa_pengiriman': data[0]['jasaPengiriman'],
+    'metode_pembayaran': data[0]['metodePembayaran'],
+    'jenis_akun': data[0]['jenisAkun'],
+    'lokasi': 'Banda Aceh',
+    'url_download': data[0]['urlDownload'],
+  }).catchError((error) => print("Failed to add user: $error"));
+  hapusBarang(idDokumen);
+}
+
+Future hapusBarang(idDokumen) async {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  DocumentReference documentReference =
+      firestore.collection('barang').doc(idDokumen);
+
+  documentReference.delete().then((_) {
+    print('Dokumen berhasil dihapus.');
+  }).catchError((error) => print("Terjadi kesalahan: $error"));
 }

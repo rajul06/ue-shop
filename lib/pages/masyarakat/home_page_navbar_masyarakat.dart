@@ -6,7 +6,6 @@ import 'package:ue_shop/pages/penampung/halaman_beranda.dart';
 import 'package:ue_shop/pages/penampung/halaman_jual_barang_penampung.dart';
 
 import '../../components/custom_app_bar.dart';
-import '../penampung/halaman_profil.dart';
 
 class HalamanBerandaMasyarakat extends StatefulWidget {
   @override

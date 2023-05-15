@@ -56,8 +56,6 @@ class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
     _userId = user?.uid;
     if (_formKey.currentState!.validate() && _selectedFile != null) {
       // Simpan data ke database
-      uploadGambarBarang(_auth, _storage, 'barang_penampung', _selectedFile!,
-          _kategori, _namaBarang);
       tambahBarang(
           _auth,
           _storage,
@@ -80,41 +78,6 @@ class _JualBarangPenampung2State extends State<JualBarangPenampung2> {
       });
     }
   }
-  // Future uploadGambarBarang(File imageFile) async {
-  //   // Fungsi untuk mengupload gambar form ke server atau melakukan tindakan lainnya
-  //   User? user = _auth.currentUser;
-  //   _userId = user?.uid;
-  //   String imagePath =
-  //       'barang_penampung/${user?.uid}/$_kategori/$_namaBarang.jpg';
-  //   try {
-  //     TaskSnapshot snapshot = await _storage.ref(imagePath).putFile(imageFile);
-  //     String downloadUrl = await snapshot.ref.getDownloadURL();
-  //     return downloadUrl;
-  //   } on FirebaseException catch (e) {
-  //     print(e);
-  //   }
-  // }
-
-  // Future<void> tambahBarang() {
-  //   // Fungsi tambah barang ke database firestore firebase
-  //   return _db
-  //       .collection('barang')
-  //       .doc()
-  //       .set({
-  //         'id_user': _userId,
-  //         'nama_barang': _namaBarang,
-  //         'harga_barang': _hargaBarang,
-  //         'kategori': _kategori,
-  //         'deskripsi': _deskripsi,
-  //         'berat_barang': _beratBarang,
-  //         'jasa_pengiriman': _jasaPengiriman,
-  //         'metode_pembayaran': _metodePembayaran
-  //       })
-  //       .then((value) => print("User Added"))
-  //       .catchError((error) => print("Failed to add user: $error"));
-  // }
-
-  // validasi form sudah lengkap
 
   @override
   Widget build(BuildContext context) {

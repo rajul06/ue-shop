@@ -181,12 +181,18 @@ class HomePageBarangPenampung extends StatelessWidget {
                                         items[index]['namaBarang'],
                                         items[index]['hargaBarang'],
                                         items[index]['lokasi'],
-                                        items[index]['urlDownload'], () {
+                                        items[index]['urlDownload'],
+                                        items[index]['idUser'],
+                                        items[index]['jasa_pengiriman'],
+                                        items[index]['metode_pembayaran'], () {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               HalamanDetailBarang(
+                                            idDokumen: items[index]
+                                                ['idDokumen'],
+                                            showEditButton: false,
                                             namaBarang: items[index]
                                                 ['namaBarang'],
                                             gambarBarang: items[index]
@@ -195,6 +201,11 @@ class HomePageBarangPenampung extends StatelessWidget {
                                                 ['hargaBarang'],
                                             deskripsiBarang: items[index]
                                                 ['deskripsi'],
+                                            idUser: items[index]['idUser'],
+                                            jasaPengiriman: items[index]
+                                                ['jasaPengiriman'],
+                                            metodePembayaran: items[index]
+                                                ['metodePembayaran'],
                                           ),
                                         ),
                                       );

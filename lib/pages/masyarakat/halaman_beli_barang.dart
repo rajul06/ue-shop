@@ -1,41 +1,100 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:ue_shop/proses/proses_tambah_barang.dart';
 import '../../components/pop_up_konfirmasi_beli_barang.dart';
 import '../../components/pop_up_konfirmasi_log_out.dart';
+import 'package:intl/intl.dart';
 
-
-class CheckoutPage extends StatefulWidget {
+class HalamanBeliBarang extends StatefulWidget {
   @override
-  _CheckoutPageState createState() => _CheckoutPageState();
+  _HalamanBeliBarangState createState() => _HalamanBeliBarangState();
+
+  final String namaBarang;
+  final String gambarBarang;
+  final hargaBarang;
+  final String deskripsiBarang;
+  final String idUser;
+  final String jasaPengiriman;
+  final String metodePembayaran;
+  final String idDokumen;
+
+  HalamanBeliBarang(
+      {Key? key,
+      required this.idDokumen,
+      required this.namaBarang,
+      required this.gambarBarang,
+      required this.hargaBarang,
+      required this.deskripsiBarang,
+      required this.idUser,
+      required this.jasaPengiriman,
+      required this.metodePembayaran})
+      : super(key: key);
 }
 
-class _CheckoutPageState extends State<CheckoutPage> {
+class _HalamanBeliBarangState extends State<HalamanBeliBarang> {
   String _alamat = '';
   String _pengiriman = 'JNE';
-  String _pembayaran = 'Transfer Bank';
-  double _totalHarga = 250000.0;
-  double _ongkir = 15000.0;
-  double _totalPembayaran = 0.0;
+  String _pembayaran = 'COD';
+  int _totalHarga = 0;
+  int _ongkir = 0;
+  int _totalPembayaran = 0;
+  String? idPembeli;
 
-  void _hitungTotalPembayaran() {
+  // mendapatkan instansi atau informasi database firebase
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+  void _hitungTotalPembayaran(hargaBarang) {
     setState(() {
-      _totalPembayaran = _totalHarga + _ongkir;
+      _totalPembayaran = hargaBarang + _ongkir;
     });
   }
 
   @override
   void initState() {
     super.initState();
-    _hitungTotalPembayaran();
+
+    _totalHarga = widget.hargaBarang;
+    _hitungTotalPembayaran(_totalHarga);
+  }
+
+  void lanjutkanPembayaran() {
+    User? user = _auth.currentUser;
+    idPembeli = user?.uid;
+    popUpKonfirmasiBeliBarang(
+        context,
+        _auth,
+        _storage,
+        _db,
+        widget.idUser,
+        widget.namaBarang,
+        idPembeli,
+        widget.gambarBarang,
+        widget.jasaPengiriman,
+        widget.metodePembayaran,
+        widget.idDokumen,
+        hargaBarang: widget.hargaBarang);
   }
 
   @override
   Widget build(BuildContext context) {
+    var currencyFormat = NumberFormat.currency(
+      symbol: "Rp ",
+      decimalDigits: 0,
+      locale: "id_ID",
+    );
     return Scaffold(
       appBar: AppBar(
-        title: Text('Beli Barang', style: TextStyle (color :Colors.black)),
+        title: Text('Beli Barang', style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black,),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -58,7 +117,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
                     image: DecorationImage(
-                      image: AssetImage('assets/images/test_images.png'),
+                      image: NetworkImage(widget.gambarBarang),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -69,7 +128,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Sepatu Olahraga',
+                        widget.namaBarang,
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
@@ -77,8 +136,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       ),
                       SizedBox(height: 4.0),
                       Text(
-                        'Rp 250.000',
-                        style: TextStyle(fontSize: 14.0, color: Colors.grey[600]),
+                        currencyFormat.format(widget.hargaBarang),
+                        style:
+                            TextStyle(fontSize: 14.0, color: Colors.grey[600]),
                       ),
                     ],
                   ),
@@ -86,7 +146,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
               ],
             ),
             SizedBox(height: 24.0),
-
             Text(
               'Alamat Pengiriman',
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
@@ -105,7 +164,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 });
               },
             ),
-
             SizedBox(height: 24.0),
             Text(
               'Jasa Pengiriman',
@@ -117,11 +175,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
               onChanged: (value) {
                 setState(() {
                   _pengiriman = value!;
-                  _ongkir = _pengiriman == 'JNE' ? 15000.0 : 20000.0;
-                  _hitungTotalPembayaran();
+                  _ongkir = _pengiriman == 'JNE' ? 15000 : 20000;
+                  _hitungTotalPembayaran(widget.hargaBarang);
                 });
               },
-              items: <String>['JNE', 'J&T', 'Pos Indonesia'].map((String value) {
+              items: <String>['JNE'].map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -141,7 +199,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   _pembayaran = value!;
                 });
               },
-              items: <String>['Transfer Bank', 'COD', 'OVO'].map((String value) {
+              items: <String>['COD'].map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -157,7 +215,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  'Rp $_totalHarga',
+                  currencyFormat.format(widget.hargaBarang),
                   style: TextStyle(fontSize: 16.0),
                 ),
               ],
@@ -185,18 +243,17 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  'Rp $_totalPembayaran',
+                  currencyFormat.format(_totalPembayaran),
                   style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
             SizedBox(height: 150),
-
             Align(
               alignment: Alignment.bottomCenter,
               child: ElevatedButton(
                 onPressed: () {
-                  popUpKonfirmasiBeliBarang(context);
+                  lanjutkanPembayaran();
                 },
                 child: Text('Lakukan Pembayaran'),
                 style: ElevatedButton.styleFrom(

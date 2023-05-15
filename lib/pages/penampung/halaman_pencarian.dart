@@ -82,10 +82,16 @@ class _HalamanHasilCariState extends State<HalamanHasilCari> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => HalamanDetailBarang(
+                                idDokumen: items[index]['idDokumen'],
                                 namaBarang: items[index]['namaBarang'],
                                 gambarBarang: items[index]['urlDownload'],
                                 hargaBarang: items[index]['hargaBarang'],
                                 deskripsiBarang: items[index]['deskripsi'],
+                                idUser: items[index]['idUser'],
+                                jasaPengiriman: items[index]['jasaPengiriman'],
+                                metodePembayaran: items[index]
+                                    ['metodePembayaran'],
+                                showEditButton: false,
                               ),
                             ),
                           );
