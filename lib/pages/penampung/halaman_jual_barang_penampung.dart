@@ -44,10 +44,11 @@ class _JualBarangPenampung extends State<JualBarangPenampung> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  backgroundColor: Color(0xFF0095DA),
-                  backgroundImage: AssetImage('assets/images/jul_profile.jpg'),
-                  radius: 58,
+                ClipRRect(
+                  borderRadius:
+                      BorderRadius.circular(5), // atur nilai sesuai keinginan
+                  child: SvgPicture.asset(
+                      'assets/images/images_svg/profile_picture.svg'), // ganti path file svg dengan yang sesuai
                 ),
                 SizedBox(
                   width: 14.0,
@@ -55,7 +56,7 @@ class _JualBarangPenampung extends State<JualBarangPenampung> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Udin',
+                    Text('Penampung',
                         textAlign: TextAlign.start,
                         style:
                             TextStyle(fontFamily: 'InriaSans', fontSize: 18.0)),
@@ -164,7 +165,7 @@ class _JualBarangPenampung extends State<JualBarangPenampung> {
                       (index) => buildCardJualBarang(
                           context,
                           items[index]['namaBarang'],
-                          currencyFormat.format(items[index]['hargaBarang']),
+                          items[index]['hargaBarang'],
                           items[index]['lokasi'],
                           items[index]['urlDownload'],
                           () {})),

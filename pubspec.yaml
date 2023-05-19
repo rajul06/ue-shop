@@ -61,6 +61,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/images_svg/bg_kategori.svg
+    - assets/images/images_svg/
     - assets/icons/
 
   # The following line ensures that the Material Icons font is

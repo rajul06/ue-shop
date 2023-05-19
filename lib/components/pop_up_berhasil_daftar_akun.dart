@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ue_shop/pages/masyarakat/home_page_navbar_masyarakat.dart';
+import 'package:ue_shop/pages/masyarakat/login_page_masyarakat.dart';
+import 'package:ue_shop/pages/penampung/login_page.dart';
 
-Future popUpBerhasilDaftarAkun(context) {
+Future popUpBerhasilDaftarAkun(
+    context, userId, namaLengkap, email, password, jenisAkun) {
   return showDialog(
       context: context,
       barrierDismissible: false,
@@ -19,7 +22,9 @@ Future popUpBerhasilDaftarAkun(context) {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => HalamanBerandaMasyarakat()));
+                        builder: (context) => jenisAkun == 'penampung'
+                            ? HalamanLoginPenampung()
+                            : HalamanLoginMasyarakat()));
               },
               child: Text("OK"),
             ),

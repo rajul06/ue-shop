@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import '../../components/pop_up_konfirmasi_log_out.dart';
 
 class HalamanProfilMasyarakat extends StatefulWidget {
@@ -31,9 +32,11 @@ class _HalamanProfilMasyarakatState extends State<HalamanProfilMasyarakat> {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    CircleAvatar(
-                      backgroundImage:
-                          AssetImage('assets/images/jul_profile.jpg'),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(
+                          30), // atur nilai sesuai keinginan
+                      child: SvgPicture.asset(
+                          'assets/images/images_svg/profile_picture.svg'), // ganti path file svg dengan yang sesuai
                     ),
                     Positioned(
                       bottom: 0,

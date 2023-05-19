@@ -111,21 +111,49 @@ Future<List> getDataSatuBarang(idDokumen) async {
       FirebaseFirestore.instance.collection('barang').doc(idDokumen);
 
   // Mendapatkan data dari koleksi "users"
-  documentReference.get().then((documentSnapshot) {
-    if (documentSnapshot.exists) {
+  documentReference.get().then((doc) {
+    if (doc.exists) {
       var data = {};
-      data['idDokumen'] = documentSnapshot.id;
-      data['namaBarang'] = documentSnapshot['nama_barang'];
-      data['hargaBarang'] = documentSnapshot['harga_barang'];
-      data['deskripsi'] = documentSnapshot['deskripsi'];
-      data['berat_barang'] = documentSnapshot['berat_barang'];
-      data['idUser'] = documentSnapshot['id_user'];
-      data['jasaPengiriman'] = documentSnapshot['jasa_pengiriman'];
-      data['jenisAkun'] = documentSnapshot['jenis_akun'];
-      data['kategori'] = documentSnapshot['kategori'];
-      data['lokasi'] = documentSnapshot['lokasi'];
-      data['metodePembayaran'] = documentSnapshot['metode_pembayaran'];
-      data['urlDownload'] = documentSnapshot['url_download'];
+      data['idDokumen'] = doc.id;
+      data['namaBarang'] = doc['nama_barang'];
+      data['hargaBarang'] = doc['harga_barang'];
+      data['deskripsi'] = doc['deskripsi'];
+      data['berat_barang'] = doc['berat_barang'];
+      data['idUser'] = doc['id_user'];
+      data['jasaPengiriman'] = doc['jasa_pengiriman'];
+      data['jenisAkun'] = doc['jenis_akun'];
+      data['kategori'] = doc['kategori'];
+      data['lokasi'] = doc['lokasi'];
+      data['metodePembayaran'] = doc['metode_pembayaran'];
+      data['urlDownload'] = doc['url_download'];
+      hasil.add(data);
+    }
+  });
+  return hasil;
+}
+
+Future<List> getBarangBeliMasyarakat(idPembeli) async {
+  List hasil = [];
+  // Mendapatkan referensi ke koleksi "users"
+  CollectionReference users =
+      FirebaseFirestore.instance.collection('transaksi');
+
+  // Mendapatkan data dari koleksi "users"
+  QuerySnapshot querySnapshot = await users.get();
+  // Mendapatkan data dari koleksi "users"
+  querySnapshot.docs.forEach((doc) {
+    if (doc.exists) {
+      var data = {};
+      data['idDokumen'] = doc.id;
+      data['namaBarang'] = doc['nama_barang'];
+      data['harga'] = doc['harga'];
+
+      data['idPembeli'] = doc['id_pembeli'];
+      data['jasaPengiriman'] = doc['jasa_pengiriman'];
+      data['kategori'] = doc['kategori'];
+      data['lokasi'] = doc['lokasi'];
+      data['metodePembayaran'] = doc['metode_pembayaran'];
+      data['urlDownload'] = doc['url_download'];
       hasil.add(data);
     }
   });

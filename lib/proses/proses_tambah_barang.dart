@@ -50,22 +50,28 @@ Future uploadGambarBarang(
   }
 }
 
-Future<void> tambahBeliBarang(auth, storage, db, idUser, namaBarang, idPembeli,
-    image, jasaPengiriman, metodePembayaran, idDokumen,
+Future<void> tambahBeliBarang(auth, storage, db, idDokumen, idPembeli,
     {hargaBarang = ''}) async {
+  var datas = await getDataSatuBarang(idDokumen);
+
+  await Future.delayed(Duration(seconds: 2));
+  var hasil = [];
+
+  var data = {};
+  data['idDokumen'] = datas[0]['idDokumen'];
+  data['namaBarang'] = datas[0]['namaBarang'];
+  data['hargaBarang'] = datas[0]['hargaBarang'];
+  data['deskripsi'] = datas[0]['deskripsi'];
+  data['berat_barang'] = datas[0]['berat_barang'];
+  data['idUser'] = datas[0]['idUser'];
+  data['jasaPengiriman'] = datas[0]['jasaPengiriman'];
+  data['jenisAkun'] = datas[0]['jenisAkun'];
+  data['kategori'] = datas[0]['kategori'];
+  data['lokasi'] = datas[0]['lokasi'];
+  data['metodePembayaran'] = datas[0]['metodePembayaran'];
+  data['urlDownload'] = datas[0]['urlDownload'];
+  hasil.add(data);
   tambahBeliBarangKeTemp(db, idDokumen);
-  // Fungsi tambah barang ke database firestore firebase
-  return db.collection('transaksi').doc().set({
-    'id_barang': idDokumen,
-    'id_penjual': idUser,
-    'id_pembeli': idPembeli,
-    'nama_barang': namaBarang,
-    'harga_barang': hargaBarang,
-    'jasa_pengiriman': jasaPengiriman,
-    'metode_pembayaran': metodePembayaran,
-    'lokasi': 'Banda Aceh',
-    'url_download': image,
-  }).catchError((error) => print("Failed to add user: $error"));
 }
 
 Future<void> tambahBeliBarangKeTemp(db, idDokumen) async {

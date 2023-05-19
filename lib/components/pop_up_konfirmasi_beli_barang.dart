@@ -27,17 +27,7 @@ void popUpKonfirmasiBeliBarang(BuildContext context, auth, storage, db, idUser,
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    tambahBeliBarang(
-                        auth,
-                        storage,
-                        db,
-                        idUser,
-                        namaBarang,
-                        idPembeli,
-                        image,
-                        jasaPengiriman,
-                        metodePembayaran,
-                        idDokumen,
+                    tambahBeliBarang(auth, storage, db, idDokumen, idPembeli,
                         hargaBarang: hargaBarang);
                     Navigator.pop(context);
                     showCheckmarkDialog(context);

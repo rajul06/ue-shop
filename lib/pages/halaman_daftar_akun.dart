@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:ue_shop/components/pop_up_berhasil_daftar_akun.dart';
+
+import '../proses/proses_tambah_data_user.dart';
 
 class HalamanDaftarAkun extends StatefulWidget {
   @override
@@ -8,11 +12,17 @@ class HalamanDaftarAkun extends StatefulWidget {
 }
 
 class _HalamanDaftarAkunState extends State<HalamanDaftarAkun> {
+  // data firebase
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+
   // data untuk daftar akun
   String _email = '';
   String _password = '';
   String _confirmPassword = '';
   String _role = '';
+  String _namaLengkap = '';
 
   // menyimpan pesan error
   String _errorMessage = '';
@@ -20,9 +30,6 @@ class _HalamanDaftarAkunState extends State<HalamanDaftarAkun> {
   // pembangkit validasi form
   final _formKey = GlobalKey<FormState>();
   AutovalidateMode _autoValidateMode = AutovalidateMode.disabled;
-
-  // instance firebase
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> daftarAkunPenampung(
       String email, String password, String role) async {
@@ -35,17 +42,19 @@ class _HalamanDaftarAkunState extends State<HalamanDaftarAkun> {
         );
         // Menyimpan atribut role pada akun pengguna
         await userCredential.user?.updateDisplayName(role);
-        popUpBerhasilDaftarAkun(context);
+
+        User? user = _auth.currentUser;
+        String? _userId = user?.uid;
+
+        popUpBerhasilDaftarAkun(
+            context, _userId, _namaLengkap, _email, _password, _role);
+        tambahDataUser(_auth, _storage, _db, _userId, _namaLengkap, _email,
+            _password, _role);
       } else {
         setState(() {
           _autoValidateMode = AutovalidateMode.always;
         });
       }
-      // Opsional: Menyimpan atribut role pada database Firestore atau Realtime Database
-      // ...
-
-      // Navigasi ke halaman berikutnya setelah berhasil mendaftar
-      // ...
     } catch (e) {
       if ('[firebase_auth/email-already-in-use] The email address is already in use by another account.' ==
           e.toString()) {
@@ -117,6 +126,14 @@ class _HalamanDaftarAkunState extends State<HalamanDaftarAkun> {
               ),
               SizedBox(
                 height: 5,
+              ),
+              TextFormField(
+                onChanged: (value) => setState(() {
+                  _namaLengkap = value;
+                }),
+                decoration: InputDecoration(
+                  labelText: 'Nama Lengkap',
+                ),
               ),
               TextFormField(
                 onChanged: (value) => setState(() {
