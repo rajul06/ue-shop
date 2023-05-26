@@ -54,7 +54,7 @@ class _HalamanJualBarangPenampung extends State<HalamanJualBarangMasyarakat> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Penampung',
+                    Text('masyarakat',
                         textAlign: TextAlign.start,
                         style:
                             TextStyle(fontFamily: 'InriaSans', fontSize: 18.0)),
